@@ -1,0 +1,10 @@
+build/
+*.jou
+*.log
+sim.out
+*.vcd
+sim/build/
+.Xil/
+clockInfo.txt
+vivado*.log
+vivado*.jou
