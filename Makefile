@@ -21,7 +21,7 @@ synth:
 	MODE=synth TOP=$(SYNTH_TOP_NAME) $(VIVADO) -mode batch -source scripts/build.tcl
 
 program:
-	$(VIVADO) -mode batch -source scripts/program.tcl
+	TOP=$(BIT_TOP) $(VIVADO) -mode batch -source scripts/program.tcl
 
 clean:
 	rm -rf build *.jou *.log sim.out *.vcd $(SIM_OUT_DIR)

@@ -1,5 +1,12 @@
-set TOP blink
-set OUT build
+proc getenv_or {name default} {
+    if {[info exists ::env($name)] && $::env($name) ne ""} {
+        return $::env($name)
+    }
+    return $default
+}
+
+set TOP [getenv_or TOP blink]
+set OUT [getenv_or OUT build]
 
 open_hw_manager
 connect_hw_server

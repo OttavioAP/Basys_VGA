@@ -87,6 +87,8 @@ module basys_vga #(
     );
 
     logic [ADDR_W-1:0] img_addr;
+    localparam int unsigned HEARTBEAT_DIV = 24;
+    logic [HEARTBEAT_DIV-1:0] heartbeat_cnt;
 
     always_ff @(posedge pixel_clk or negedge resetn_sync) begin
         if (!resetn_sync) begin
@@ -125,9 +127,11 @@ module basys_vga #(
 
     always_ff @(posedge pixel_clk or negedge resetn_sync) begin
         if (!resetn_sync) begin
+            heartbeat_cnt <= '0;
             led <= 1'b0;
         end else begin
-            led <= locked;
+            heartbeat_cnt <= heartbeat_cnt + 1'b1;
+            led <= heartbeat_cnt[HEARTBEAT_DIV-1];
         end
     end
 
