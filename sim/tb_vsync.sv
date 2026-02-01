@@ -8,10 +8,11 @@ module tb_vsync;
     localparam int H_TOTAL     = 16;
     localparam int V_TOTAL     = LINES + FRONT_PORCH + VSYNC_WIDTH + BACK_PORCH;
     localparam int H_COUNT_W   = (H_TOTAL > 1) ? $clog2(H_TOTAL) : 1;
+    localparam int H_PORT_W    = (H_TOTAL > 1) ? $clog2(800) : 1;
 
     logic clk = 0;
     logic resetn = 0;
-    logic [H_COUNT_W-1:0] h_count = '0;
+    logic [H_PORT_W-1:0] h_count = '0;
     logic v_blank;
     logic vsync;
 

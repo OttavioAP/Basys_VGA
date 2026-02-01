@@ -1,17 +1,17 @@
 `timescale 1ns / 1ps
 
 module basys_vga #(
-    parameter int unsigned IMG_W        = 640,
-    parameter int unsigned IMG_H        = 480,
-    parameter int unsigned LINE_WIDTH   = IMG_W,
-    parameter int unsigned H_FRONT_PORCH = 16,
-    parameter int unsigned H_SYNC_WIDTH  = 96,
-    parameter int unsigned H_BACK_PORCH  = 48,
-    parameter int unsigned LINES         = IMG_H,
-    parameter int unsigned V_FRONT_PORCH = 10,
-    parameter int unsigned V_SYNC_WIDTH  = 2,
-    parameter int unsigned V_BACK_PORCH  = 33,
-    parameter string       MEM_FILE     = "rtl/timing/image/stella.mem"
+    parameter integer IMG_W         = 640,
+    parameter integer IMG_H         = 480,
+    parameter integer LINE_WIDTH    = IMG_W,
+    parameter integer H_FRONT_PORCH = 16,
+    parameter integer H_SYNC_WIDTH  = 96,
+    parameter integer H_BACK_PORCH  = 48,
+    parameter integer LINES         = IMG_H,
+    parameter integer V_FRONT_PORCH = 10,
+    parameter integer V_SYNC_WIDTH  = 2,
+    parameter integer V_BACK_PORCH  = 33,
+    parameter MEM_FILE              = "rtl/timing/image/stella.mem"
 )(
     input  logic       clk,
     input  logic       reset,
@@ -23,12 +23,12 @@ module basys_vga #(
     output logic       led
 );
 
-    localparam int unsigned H_TOTAL   = LINE_WIDTH + H_FRONT_PORCH + H_SYNC_WIDTH + H_BACK_PORCH;
-    localparam int unsigned V_TOTAL   = LINES + V_FRONT_PORCH + V_SYNC_WIDTH + V_BACK_PORCH;
-    localparam int unsigned H_COUNT_W = (H_TOTAL > 1) ? $clog2(H_TOTAL) : 1;
-    localparam int unsigned V_COUNT_W = (V_TOTAL > 1) ? $clog2(V_TOTAL) : 1;
-    localparam int unsigned IMG_SIZE  = IMG_W * IMG_H;
-    localparam int unsigned ADDR_W    = (IMG_SIZE > 1) ? $clog2(IMG_SIZE) : 1;
+    localparam integer H_TOTAL   = LINE_WIDTH + H_FRONT_PORCH + H_SYNC_WIDTH + H_BACK_PORCH;
+    localparam integer V_TOTAL   = LINES + V_FRONT_PORCH + V_SYNC_WIDTH + V_BACK_PORCH;
+    localparam integer H_COUNT_W = (H_TOTAL > 1) ? $clog2(H_TOTAL) : 1;
+    localparam integer V_COUNT_W = (V_TOTAL > 1) ? $clog2(V_TOTAL) : 1;
+    localparam integer IMG_SIZE  = IMG_W * IMG_H;
+    localparam integer ADDR_W    = (IMG_SIZE > 1) ? $clog2(IMG_SIZE) : 1;
 
     logic resetn;
     assign resetn = ~reset;
@@ -87,7 +87,7 @@ module basys_vga #(
     );
 
     logic [ADDR_W-1:0] img_addr;
-    localparam int unsigned HEARTBEAT_DIV = 24;
+    localparam integer HEARTBEAT_DIV = 24;
     logic [HEARTBEAT_DIV-1:0] heartbeat_cnt;
 
     always_ff @(posedge pixel_clk or negedge resetn_sync) begin

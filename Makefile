@@ -1,16 +1,40 @@
 VIVADO ?= /opt/2025.1/Vivado/bin/vivado
 SIM_OUT_DIR ?= sim/build
+TB ?= tb_basys_vga
 BIT_TOP ?= basys_vga
 SYNTH_FILE ?=
 SYNTH_TOP ?=
 SYNTH_TOP_NAME := $(if $(SYNTH_TOP),$(SYNTH_TOP),$(basename $(notdir $(SYNTH_FILE))))
 SYNTH_TOP_NAME := $(if $(SYNTH_TOP_NAME),$(SYNTH_TOP_NAME),pixel_clock_gen)
 
+ifeq ($(TB),tb_basys_vga)
+RTL_SOURCES ?= rtl/*.sv rtl/timing/*.sv rtl/timing/image/*.sv
+endif
+ifeq ($(TB),tb_basys_vga_top)
+RTL_SOURCES ?= rtl/*.sv rtl/timing/*.sv rtl/timing/image/*.sv
+endif
+ifeq ($(TB),tb_pixel_clock_gen)
+RTL_SOURCES ?= rtl/timing/pixel_clock_gen.sv
+endif
+ifeq ($(TB),tb_hsync)
+RTL_SOURCES ?= rtl/timing/hsync.sv
+endif
+ifeq ($(TB),tb_vsync)
+RTL_SOURCES ?= rtl/timing/vsync.sv
+endif
+ifeq ($(TB),tb_rgb_visibility)
+RTL_SOURCES ?= rtl/timing/rgb_visibility.sv
+endif
+ifeq ($(TB),tb_image_rom)
+RTL_SOURCES ?= rtl/timing/image/image_rom.sv
+endif
+RTL_SOURCES ?= rtl/timing/*.sv rtl/timing/image/*.sv
+
 .PHONY: simulate bitstream synth program clean
 
 simulate:
 	mkdir -p $(SIM_OUT_DIR)
-	iverilog -g2012 -DSIM -o $(SIM_OUT_DIR)/sim.out rtl/*.sv sim/*.sv
+	iverilog -g2012 -DSIM -o $(SIM_OUT_DIR)/sim.out $(RTL_SOURCES) sim/xilinx_prims_stub.sv sim/$(TB).sv
 	vvp $(SIM_OUT_DIR)/sim.out
 
 bitstream:

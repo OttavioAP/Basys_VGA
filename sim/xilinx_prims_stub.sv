@@ -15,7 +15,7 @@ module BUFG(
 endmodule
 
 module MMCME2_BASE #(
-    parameter string BANDWIDTH = "OPTIMIZED",
+    parameter BANDWIDTH = "OPTIMIZED",
     parameter real   CLKFBOUT_MULT_F = 1.0,
     parameter real   CLKIN1_PERIOD = 10.0,
     parameter real   CLKFBOUT_PHASE = 0.0,
@@ -23,7 +23,7 @@ module MMCME2_BASE #(
     parameter real   CLKOUT0_PHASE = 0.0,
     parameter real   CLKOUT0_DUTY_CYCLE = 0.5,
     parameter real   DIVCLK_DIVIDE = 1.0,
-    parameter string STARTUP_WAIT = "FALSE"
+    parameter STARTUP_WAIT = "FALSE"
 ) (
     input  wire CLKIN1,
     input  wire CLKFBIN,

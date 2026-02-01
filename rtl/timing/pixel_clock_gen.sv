@@ -7,7 +7,7 @@ module pixel_clock_gen #(
     parameter real DIVCLK_DIVIDE     = 1.0,
     parameter real CLKOUT_PHASE      = 0.0,
     parameter real CLKOUT_DUTY       = 0.5,
-    parameter string BANDWIDTH       = "OPTIMIZED"
+    parameter BANDWIDTH              = "OPTIMIZED"
 ) (
     input  wire clk_in,
     input  wire resetn,
